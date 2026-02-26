@@ -37,10 +37,11 @@ animation:introFade 3s forwards;
 
 .intro-text{
 font-family:'Montserrat',sans-serif;
-font-size:3rem;
+font-size:clamp(2rem,8vw,4rem);
 font-weight:900;
-letter-spacing:5px;
-color:#ff0000;
+letter-spacing:4px;
+color:red;
+text-align:center;
 text-shadow:0 0 20px red;
 }
 
@@ -52,28 +53,29 @@ text-shadow:0 0 20px red;
 
 /* HERO */
 .hero{
-height:100vh;
+min-height:80vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
+padding:40px 20px;
 }
 
 .hero h1{
-font-size:3rem;
+font-size:clamp(2rem,5vw,3rem);
 font-family:'Montserrat',sans-serif;
 font-weight:900;
 }
 
 .hero h2{
-margin:15px 0;
-color:#ff0000;
+margin:10px 0;
+color:red;
 }
 
 .glow-btn{
-margin-top:30px;
-padding:15px 40px;
+margin-top:20px;
+padding:12px 30px;
 background:red;
 color:white;
 text-decoration:none;
@@ -84,178 +86,199 @@ transition:0.3s;
 }
 
 .glow-btn:hover{
-box-shadow:0 0 40px red,0 0 80px red;
 transform:scale(1.05);
 }
 
-/* STATS */
 .stats{
-margin-top:20px;
+margin-top:10px;
 }
 
 .stats h3{
-font-size:2rem;
-color:#ff0000;
+font-size:1.8rem;
+color:red;
 }
 
-/* SLIDER */
+/* SECTION */
 .slider-section{
-padding:80px 20px;
+padding:40px 20px;
 text-align:center;
 }
 
 .slider{
 display:flex;
 overflow:hidden;
-width:90%;
-margin:auto;
-transition: transform 0.5s ease;
+width:100%;
+max-width:800px;
+margin:20px auto;
+transition:transform 0.4s ease;
 }
 
 .slide{
 min-width:100%;
+display:flex;
+justify-content:center;
 }
 
-video,img{
+video{
 width:100%;
-border-radius:15px;
+max-width:500px;
+border-radius:12px;
 }
 
-/* FADE */
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:1s;
+img{
+width:100%;
+max-width:600px;
+border-radius:12px;
 }
 
-.fade.show{
-opacity:1;
-transform:translateY(0);
+/* DOTS */
+.dots{
+margin-top:10px;
+}
+
+.dot{
+height:10px;
+width:10px;
+margin:0 5px;
+background:#555;
+display:inline-block;
+border-radius:50%;
+cursor:pointer;
+transition:0.3s;
+}
+
+.dot.active{
+background:red;
+}
+
+/* RESPONSIVE */
+@media(min-width:1024px){
+video{
+max-width:600px;
+}
+img{
+max-width:700px;
+}
 }
 
 footer{
-padding:30px;
+padding:20px;
 text-align:center;
 opacity:0.6;
+font-size:0.9rem;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CINEMATIC INTRO -->
 <div class="intro">
-  <h1 class="intro-text">UNFILTERED DEVRAJ</h1>
+<h1 class="intro-text">UNFILTERED DEVRAJ</h1>
 </div>
 
-<!-- HERO -->
 <section class="hero">
-  <h1>Devraj Kumar</h1>
-  <h2><span id="typing"></span></h2>
+<h1>Devraj Kumar</h1>
+<h2><span id="typing"></span></h2>
 
-  <div class="stats">
-    <div>
-      <h3 id="subCounter">0</h3>
-      <p>Subscribers</p>
-    </div>
-  </div>
+<div class="stats">
+<h3 id="subCounter">0</h3>
+<p>Subscribers</p>
+</div>
 
-  <a href="https://youtube.com/@UnfilteredDevraj" target="_blank" class="glow-btn">
-    SUBSCRIBE NOW
-  </a>
+<a href="https://youtube.com/@UnfilteredDevraj" target="_blank" class="glow-btn">
+SUBSCRIBE NOW
+</a>
 </section>
 
-<!-- VIDEO SLIDER -->
-<section class="slider-section fade">
-  <h2>🔥 Short Demos</h2>
-  <div class="slider" id="videoSlider">
-    <div class="slide"><video src="video1.mp4" controls></video></div>
-    <div class="slide"><video src="video2.mp4" controls></video></div>
-    <div class="slide"><video src="video3.mp4" controls></video></div>
-  </div>
+<!-- VIDEO SECTION -->
+<section class="slider-section">
+<h2>🔥 Short Demos</h2>
+
+<div class="slider" id="videoSlider">
+<div class="slide"><video src="video1.mp4" controls></video></div>
+<div class="slide"><video src="video2.mp4" controls></video></div>
+<div class="slide"><video src="video3.mp4" controls></video></div>
+</div>
+
+<div class="dots" id="videoDots"></div>
 </section>
 
-<!-- POSTS -->
-<section class="slider-section fade">
-  <h2>⚡ Featured Moments</h2>
-  <div class="slider" id="postSlider">
-    <div class="slide"><img src="post1.jpg"></div>
-    <div class="slide"><img src="post2.jpg"></div>
-    <div class="slide"><img src="post3.jpg"></div>
-  </div>
+<!-- POST SECTION -->
+<section class="slider-section">
+<h2>⚡ Featured Moments</h2>
+
+<div class="slider" id="postSlider">
+<div class="slide"><img src="post1.jpg"></div>
+<div class="slide"><img src="post2.jpg"></div>
+<div class="slide"><img src="post3.jpg"></div>
+</div>
+
+<div class="dots" id="postDots"></div>
 </section>
 
 <footer>
-  <p>© 2026 Devraj Kumar | @UnfilteredDevraj</p>
+© 2026 Devraj Kumar | @UnfilteredDevraj
 </footer>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-// Typing Effect
-const words = ["Vlogger", "Creator", "Storyteller"];
-let i = 0, j = 0, current = "", deleting = false;
+// Typing
+const words=["Vlogger","Creator","Storyteller"];
+let i=0,j=0,deleting=false;
 
-function type() {
-  if (i >= words.length) i = 0;
-  current = words[i];
-
-  if (!deleting) {
-    document.getElementById("typing").textContent =
-      current.substring(0, j++);
-    if (j > current.length) {
-      deleting = true;
-      setTimeout(type, 1000);
-      return;
-    }
-  } else {
-    document.getElementById("typing").textContent =
-      current.substring(0, j--);
-    if (j < 0) {
-      deleting = false;
-      i++;
-    }
-  }
-  setTimeout(type, 100);
+function type(){
+let current=words[i];
+if(!deleting){
+document.getElementById("typing").textContent=current.substring(0,j++);
+if(j>current.length){deleting=true;setTimeout(type,1000);return;}
+}else{
+document.getElementById("typing").textContent=current.substring(0,j--);
+if(j<0){deleting=false;i=(i+1)%words.length;}
+}
+setTimeout(type,100);
 }
 type();
 
-// Fade on scroll
-const faders = document.querySelectorAll(".fade");
-window.addEventListener("scroll", () => {
-  faders.forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-      el.classList.add("show");
-    }
-  });
-});
-
-// Auto Slide
-function autoSlide(id){
-  const slider = document.getElementById(id);
-  let index = 0;
-  setInterval(()=>{
-    index++;
-    if(index >= slider.children.length) index = 0;
-    slider.style.transform = `translateX(-${index*100}%)`;
-  },3000);
+// Subscriber Counter
+let count=0,target=582;
+let counter=document.getElementById("subCounter");
+let update=setInterval(()=>{
+count+=5;
+counter.textContent=count;
+if(count>=target){
+counter.textContent=target;
+clearInterval(update);
 }
-autoSlide("videoSlider");
-autoSlide("postSlider");
-
-// Subscriber Counter Animation
-let count = 0;
-let target = 582;
-let counter = document.getElementById("subCounter");
-
-let update = setInterval(()=>{
-  count += 5;
-  counter.textContent = count;
-  if(count >= target){
-    counter.textContent = target;
-    clearInterval(update);
-  }
 },30);
+
+// Manual Slider Function
+function createSlider(sliderId,dotsId){
+const slider=document.getElementById(sliderId);
+const slides=slider.children;
+const dotsContainer=document.getElementById(dotsId);
+let index=0;
+
+for(let k=0;k<slides.length;k++){
+let dot=document.createElement("span");
+dot.classList.add("dot");
+if(k===0) dot.classList.add("active");
+dot.addEventListener("click",()=>{
+index=k;
+updateSlider();
+});
+dotsContainer.appendChild(dot);
+}
+
+function updateSlider(){
+slider.style.transform=`translateX(-${index*100}%)`;
+dotsContainer.querySelectorAll(".dot").forEach(d=>d.classList.remove("active"));
+dotsContainer.children[index].classList.add("active");
+}
+}
+
+createSlider("videoSlider","videoDots");
+createSlider("postSlider","postDots");
 
 });
 </script>

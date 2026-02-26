@@ -1,56 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Devraj Kumar | Unfiltered Devraj</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+// Typing Effect
+const words = ["Vlogger", "Creator", "Storyteller"];
+let i = 0, j = 0, current = "", deleting = false;
 
-<!-- HERO -->
-<section class="hero fade">
-  <h1>Devraj Kumar</h1>
-  <h2><span id="typing"></span></h2>
-  <a href="https://youtube.com/@UnfilteredDevraj" target="_blank" class="glow-btn">
-    Watch on YouTube
-  </a>
-</section>
+function type() {
+  if (i >= words.length) i = 0;
+  current = words[i];
 
-<!-- ABOUT -->
-<section class="about fade">
-  <h2>About Me</h2>
-  <p>
-    I'm documenting my journey through vlogs, short films, and real-life moments.
-    Welcome to Unfiltered Devraj.
-  </p>
-</section>
+  if (!deleting) {
+    document.getElementById("typing").textContent =
+      current.substring(0, j++);
+    if (j > current.length) {
+      deleting = true;
+      setTimeout(type, 1000);
+      return;
+    }
+  } else {
+    document.getElementById("typing").textContent =
+      current.substring(0, j--);
+    if (j < 0) {
+      deleting = false;
+      i++;
+    }
+  }
+  setTimeout(type, 100);
+}
+type();
 
-<!-- VIDEOS SLIDER -->
-<section class="slider-section fade">
-  <h2>Short Demos</h2>
-  <div class="slider" id="videoSlider">
-    <div class="slide"><video src="video1.mp4" controls></video></div>
-    <div class="slide"><video src="video2.mp4" controls></video></div>
-    <div class="slide"><video src="video3.mp4" controls></video></div>
-  </div>
-</section>
+// Fade on scroll
+const faders = document.querySelectorAll(".fade");
+window.addEventListener("scroll", () => {
+  faders.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add("show");
+    }
+  });
+});
 
-<!-- POSTS SLIDER -->
-<section class="slider-section fade">
-  <h2>Featured Posts</h2>
-  <div class="slider" id="postSlider">
-    <div class="slide"><img src="post1.jpg"></div>
-    <div class="slide"><img src="post2.jpg"></div>
-    <div class="slide"><img src="post3.jpg"></div>
-  </div>
-</section>
+// Auto Slide
+function autoSlide(id){
+  const slider = document.getElementById(id);
+  let index = 0;
+  setInterval(()=>{
+    index++;
+    if(index >= slider.children.length) index = 0;
+    slider.style.transform = `translateX(-${index*100}%)`;
+  },3000);
+}
+autoSlide("videoSlider");
+autoSlide("postSlider");
 
-<footer>
-  <p>© 2026 Devraj Kumar | @UnfilteredDevraj</p>
-</footer>
+// Subscriber Counter Animation (582)
+let count = 0;
+let target = 582;
+let counter = document.getElementById("subCounter");
 
-<script src="script.js"></script>
-</body>
-</html>
+let update = setInterval(()=>{
+  count += 5;
+  counter.textContent = count;
+  if(count >= target){
+    counter.textContent = target;
+    clearInterval(update);
+  }
+},30);
